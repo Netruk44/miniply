@@ -623,6 +623,16 @@ namespace miniply {
     }
   }
 
+  PLYReader* PLYReader::create(const char *filename)
+  {
+    return new PLYReader(filename);
+  }
+
+  void PLYReader::destroy(PLYReader *reader)
+  {
+    delete reader;
+  }
+
 
   PLYReader::~PLYReader()
   {

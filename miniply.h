@@ -30,6 +30,7 @@ SOFTWARE.
 #include <cstdio>
 #include <string>
 #include <vector>
+#include <swift/bridging>
 
 
 /// miniply - A simple and fast parser for PLY files
@@ -148,6 +149,12 @@ namespace miniply {
   public:
     PLYReader(const char* filename);
     ~PLYReader();
+      
+    PLYReader(const PLYReader &) = delete;
+    
+    // Required to create PLYReader from Swift
+    static PLYReader* create(const char * filename);
+    static void destroy(PLYReader* reader);
 
     bool valid() const;
     bool has_element() const;
@@ -294,7 +301,7 @@ namespace miniply {
     std::vector<uint8_t> m_elementData;
 
     char* m_tmpBuf = nullptr;
-  };
+  } SWIFT_UNSAFE_REFERENCE;
 
 
   /// Given a polygon with `n` vertices, where `n` > 3, triangulate it and
